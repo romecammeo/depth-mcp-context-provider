@@ -1,0 +1,53 @@
+Depth MCP portfolio — preparation-time validation
+
+Validation completed by: 2026-10-12T15:10:54Z
+Source branch: release/autonomous-reviewer-alpha
+Source commit: 364f3e02d8b944a0439e9be3ab191259b3385b9e
+Source worktree before run: clean
+Source worktree after run: clean
+
+Commands and results:
+
+1. npm run build
+   PASS — Next.js 16.2.10 production build compiled successfully.
+   The build enumerated all seven /api/mcp route handlers.
+
+2. npm run typecheck
+   PASS — tsc --noEmit
+
+3. node --check mcp/depth-mcp-server.mjs
+   PASS — syntax accepted.
+   Qualification: this does not resolve or execute the absent MCP SDK dependency.
+
+4. npm run smoke:mcp
+   PASS — 16 passed, 0 failed
+
+Smoke check list:
+  ✓ mint scoped token (depth_mcp_… returned once)
+  ✓ token list has no plaintext token and no hash
+  ✓ no bearer → 401
+  ✓ bad bearer → 401
+  ✓ GET projects (bearer) lists the workspace project
+  ✓ GET pack returns claims
+  ✓ claims are SOURCE-LINKED (title + source_type)
+  ✓ GET handoff returns markdown w/ source legend
+  ✓ GET sources = metadata directory, NO bodies
+  ✓ GET one source returns full body + metadata
+  ✓ POST to a read route → 405 (read-only)
+  ✓ read payloads leak no secrets
+  ✓ Slack start with no env → /settings?slack=unconfigured
+  ✓ B's token cannot read A's pack (404)
+  ✓ B's token cannot read A's source (404)
+  ✓ revoked token → 401
+
+Scope qualification:
+The smoke suite called the HTTP API directly. It did not launch the MCP adapter
+or exercise MCP client handshake, tool listing, or tool calls over stdio.
+
+Owner-review rerun note:
+During final package review on 2026-10-12, the same validation sequence was
+rerun from the full local Depth checkout. `npm run build` and `npm run
+smoke:mcp` initially hit sandbox-localhost restrictions in the review
+environment; rerunning those two commands outside the sandbox passed. `npm run
+typecheck` and `node --check mcp/depth-mcp-server.mjs` passed in the sandbox.
+The rerun smoke result was again `PASS — 16 passed, 0 failed`.

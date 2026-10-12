@@ -1,0 +1,36 @@
+Depth MCP read-only seam — historical result record
+
+Record type: provenance-labeled transcription of the previously verified sanitized evidence packet
+Original execution date: 2026-10-12
+Original exact timestamp: not retained
+Original execution context: full Depth application, local backend, temporary SQLite database, Next.js HTTP routes
+MCP client/stdio interoperability exercised: no
+
+Recorded output:
+
+MCP read-only seam smoke → http://localhost:4402
+
+  ✓ mint scoped token (depth_mcp_… returned once)
+  ✓ token list has no plaintext token and no hash
+  ✓ no bearer → 401
+  ✓ bad bearer → 401
+  ✓ GET projects (bearer) lists the workspace project
+  ✓ GET pack returns claims
+  ✓ claims are SOURCE-LINKED (title + source_type)
+  ✓ GET handoff returns markdown w/ source legend
+  ✓ GET sources = metadata directory, NO bodies
+  ✓ GET one source returns full body + metadata
+  ✓ POST to a read route → 405 (read-only)
+  ✓ read payloads leak no secrets
+  ✓ Slack start with no env → /settings?slack=unconfigured
+  ✓ B's token cannot read A's pack (404)
+  ✓ B's token cannot read A's source (404)
+  ✓ revoked token → 401
+
+PASS — 16 passed, 0 failed
+
+Provenance qualification:
+The named ZIP was unavailable at the supplied path during portfolio preparation.
+This text preserves the previously verified result but is not represented as a
+byte-for-byte extraction from the missing ZIP. A separate preparation-time run
+is recorded independently.

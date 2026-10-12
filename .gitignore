@@ -1,0 +1,26 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Dependencies and build output
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# Local data and caches
+*.sqlite
+*.sqlite3
+*.db
+.DS_Store
+*.log
+
+# Editors
+.vscode/
+.idea/
